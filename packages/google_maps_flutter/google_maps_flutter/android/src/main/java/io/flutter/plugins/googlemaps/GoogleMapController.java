@@ -104,6 +104,19 @@ final class GoogleMapController
     this.tileOverlaysController = new TileOverlaysController(methodChannel);
   }
 
+
+  @Override
+  public void onActivityResumed(Activity activity) {
+    if (disposed || activity.hashCode() != registrarActivityHashCode) {
+      return;
+    }
+    mapView.onResume();
+    
+    if (googleMap != null) {
+      googleMap.setMapType(googleMap.getMapType());
+    }
+  }
+
   @Override
   public View getView() {
     return mapView;
